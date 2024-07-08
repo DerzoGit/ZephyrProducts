@@ -15,9 +15,13 @@ const db = {}
 
 // // Import des modèles
 db.sequelize = sequelize
+db.User = require('./models/user')(sequelize)
+db.Product = require('./models/product')(sequelize)
 
+db.User.hasMany(db.Product, { foreignKey: "userId" })
+db.Product.belongsTo(db.User, { foreignKey: "userId" })
 
 // Synchronisation des modèles
-// db.sequelize.sync()
+db.sequelize.sync()
 
 module.exports = db
