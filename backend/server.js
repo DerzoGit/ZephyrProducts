@@ -1,9 +1,9 @@
-const express = require("express")
-const cors = require("cors")
-const helmet = require("helmet")
+const express = require('express')
+const cors = require('express')
+const helmet = require('helmet')
 
 // Import de la connexion DB
-let DB = require("./db.config")
+let DB = require('./db.config')
 
 // Initialisation API express
 const app = express()
