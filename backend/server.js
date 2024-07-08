@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('express')
 const helmet = require('helmet')
+const errorHandler = require('./middleware/errorHandler')
 
 // Import de la connexion DB
 let DB = require('./db.config')
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
 
+
 // Import des routes
 const authRoutes = require('./routes/auth')
 
@@ -21,6 +23,9 @@ app.get("/", (req, res) => res.send("Server online"))
 app.use("/auth", authRoutes)
 
 app.get("*", (req, res) => res.status(501).send("Where are you going ?"))
+
+// Middleware errorHandler qui permet la gestion des messages d'erreurs
+app.use(errorHandler)
 
 DB.sequelize.authenticate()
     .then(() => console.log("Database connection's OK"))
