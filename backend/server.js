@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('express')
 const helmet = require('helmet')
 const errorHandler = require('./middleware/errorHandler')
+const checkToken = require('./middleware/checkToken')
 
 // Import de la connexion DB
 let DB = require('./db.config')
@@ -22,7 +23,7 @@ const productRoutes = require('./routes/product')
 // Mise en place routage
 app.get("/", (req, res) => res.send("Server online"))
 app.use("/auth", authRoutes)
-app.use("/products", productRoutes)
+app.use("/products", checkToken, productRoutes)
 
 app.get("*", (req, res) => res.status(501).send("Where are you going ?"))
 
