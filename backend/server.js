@@ -14,9 +14,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
 
 // Import des routes
+const authRoutes = require('./routes/auth')
 
 // Mise en place routage
 app.get("/", (req, res) => res.send("Server online"))
+app.use("/auth", authRoutes)
 
 app.get("*", (req, res) => res.status(501).send("Where are you going ?"))
 
