@@ -1,3 +1,4 @@
+// Import des modules nécessaires
 const jwt = require('jsonwebtoken')
 const db = require('../db.config')
 const { CustomError } = require('../middleware/customError')
