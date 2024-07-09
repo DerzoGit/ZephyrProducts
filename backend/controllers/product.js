@@ -69,6 +69,36 @@ exports.createProduct = async (req, res, next) => {
     }
 }
 
+exports.updateProduct = async (req, res, next) => {
+    try {
+        // Récupération de l'ID utilisateur
+        let productId = parseInt(req.params.id)
+
+        // Vérification si ID présente
+        if(!productId) {
+            throw new CustomError("L'ID du produit n'a pas été récupéré.", 400)
+        }
+
+        // Vérification si l'utilisateur authentifié est admin
+        if(req.auth.userRole !== "Admin") {
+            throw new CustomError("Vous n'avez pas les permissions nécessaires.", 403)
+        }
+
+        // Recherche du produit et vérification si existant
+        let product = await db.Product.findOne({ where: { id: productId }})
+        if(product === null) {
+            throw new CustomError("Ce produit n'existe pas.", 404)
+        }
+
+        // Mise à jour du produit
+        product = await db.Product.update(req.body, { where: { id: productId }})
+
+        return res.status(200).json({ message: "Le produit a bien été mise à jour."})
+    } catch (err) {
+        next(err)
+    }
+}
+
 exports.deleteProduct = async (req, res, next) => {
     try {
         // Récupération de l'ID utilisateur
