@@ -44,6 +44,11 @@ exports.createProduct = async (req, res, next) => {
         // Récupération des champs remplis
         const { nom, description } = req.body
 
+        // Vérification si l'utilisateur authentifié est admin
+        if(req.auth.userRole !== "Admin") {
+            throw new CustomError("Vous n'avez pas les permissions nécessaires.", 403)
+        }
+
         // Vérification des données reçues
         if(!userId || !nom || !description) {
             throw new CustomError("Des données sont manquantes.", 400)
