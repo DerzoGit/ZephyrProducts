@@ -17,7 +17,7 @@ exports.getProduct = async (req, res, next) => {
 
         // Vérification si ID existant
         if(!productId) {
-            throw new CustomError("L'identifiant produit n'est pas correct", 400)
+            throw new CustomError("L'identifiant produit n'est pas correct.", 400)
         }
 
         // Récupération du produit
@@ -25,7 +25,7 @@ exports.getProduct = async (req, res, next) => {
 
         // Test si produit existant
         if(product == null) {
-            throw new CustomError("Ce produit n'existe pas", 404)
+            throw new CustomError("Ce produit n'existe pas.", 404)
         }
 
         // Renvoi du post trouvé
@@ -63,7 +63,7 @@ exports.createProduct = async (req, res, next) => {
         // Création du produit
         product = await db.Product.create(req.body)
 
-        return res.json({ message: "Le produit a été créé", data:product })
+        return res.json({ message: "Le produit a été créé.", data:product })
     } catch (err) {
         next(err)
     }
@@ -117,7 +117,7 @@ exports.deleteProduct = async (req, res, next) => {
         // Recherche du produit et vérification si existant
         let product = await db.Product.findOne({ where: { id: productId }})
         if(product === null) {
-            throw new CustomError("Ce produit n'existe pas", 404)
+            throw new CustomError("Ce produit n'existe pas.", 404)
         }
 
         // Suppression du produit
