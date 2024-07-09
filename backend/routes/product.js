@@ -10,7 +10,7 @@ let router = express.Router()
 router.get("/", productCtrl.getAllProducts)
 router.get("/:id", productCtrl.getProduct)
 router.post("/", productCtrl.createProduct)
-// router.put("/:id", productCtrl.updateProduct)
+router.put("/:id", productCtrl.updateProduct)
 router.delete("/:id", productCtrl.deleteProduct)
 
 module.exports = router
