@@ -28,8 +28,7 @@ exports.getProduct = async (req, res, next) => {
             throw new CustomError("Ce produit n'existe pas.", 404)
         }
 
-        // Renvoi du post trouvé
-        return res.json({ data: post })
+        return res.json({ data: product })
     } catch (err) {
         next(err)
     }
@@ -88,6 +87,15 @@ exports.updateProduct = async (req, res, next) => {
         let product = await db.Product.findOne({ where: { id: productId }})
         if(product === null) {
             throw new CustomError("Ce produit n'existe pas.", 404)
+        }
+
+        // Vérification si le nom du produit est déjà existant s'il n'est pas celui choisi
+        let newProductName = req.body.nom
+        if(newProductName) {
+            let oldProductName = await db.Product.findOne({ where: { nom: newProductName }})
+            if(oldProductName && oldProductName.id !== productId) {
+                throw new CustomError(`Le produit nommé ${newProductName} existe déjà.`, 409)
+            }
         }
 
         // Mise à jour du produit
