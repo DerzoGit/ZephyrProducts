@@ -22,13 +22,13 @@ exports.signup = async (req, res, next) => {
 
         // Validation des données
         if(!nom || !password) {
-            throw new CustomError("Un champ à remplir est manquant", 400)
+            throw new CustomError("Un champ à remplir est manquant.", 400)
         }
 
         // Vérification de l'existance de l'utilisateur
         let user = await db.User.findOne({ where: { nom: nom } })
         if(user !== null) {
-            throw new CustomError(`L'utilisateur nommé ${nom} existe déjà`, 409)
+            throw new CustomError(`L'utilisateur nommé ${nom} existe déjà.`, 409)
         }
 
         // Vérification si le mot de passe correspond aux attentes minimales
@@ -40,7 +40,7 @@ exports.signup = async (req, res, next) => {
         // Création de l'utilisateur
         user = await db.User.create(req.body)
 
-        return res.json({ message: "L'utilisateur a été créé ", data:user })
+        return res.json({ message: "L'utilisateur a été créé.", data:user })
     } catch(err) {
         next(err)
     }
@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
 
         // Validation des données
         if(!nom || !password) {
-            throw new CustomError("Un champ à remplir est manquant", 400)
+            throw new CustomError("Un champ à remplir est manquant.", 400)
         }
 
         // Vérification de l'existance de l'utilisateur
